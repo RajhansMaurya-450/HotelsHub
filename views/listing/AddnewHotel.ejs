@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotels Hub</title>
+</head>
+
+<body> 
+    <h2>Add details of your Hotel!</h2>
+    <form method="POST" action="/listings?_method=PUT">
+        <label>Hotel Name:</label>
+        <input type="text" placeholder="Enter your Hotel name" id ="title" name="ListingsArr[title]"><br>
+
+        <label>Description:</label>
+        <textarea name="ListingsArr[description]" placeholder="Tell something about your hotel's facilities" id="description" name="description"></textarea> <br></br>
+
+        <label>Price:</label>
+        <input type="number" placeholder="Enter best price" id ="price" name="ListingsArr[price]"> <br></br>
+
+         <label>location:</label>
+        <input type="text" placeholder="Enter correct location" id ="location" name="ListingsArr[location]"> <br></br>
+
+         <label>country:</label>
+        <input type="text" placeholder="Enter country" id ="country" name="ListingsArr[country]"> <br></br>
+
+        <label>image:</label>
+        <input type="text" placeholder="Enter img url" id ="image" name="ListingsArr[image]"> <br></br>
+
+        <button style="background-color: rgb(107, 55, 12); color: azure;">Submit</button>
+    </form>
+
+</body>
+
+</html>

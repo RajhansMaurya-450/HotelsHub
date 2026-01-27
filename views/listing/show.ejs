@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Specific Hotel Data</title>
+</head>
+<body>
+     <h3><%= singleData.title %></h3>
+     <ul>
+        <li><%= singleData.description %></li>
+        <li>₹<%= singleData.price.toLocaleString("en-IN") %></li>
+        <li><%= singleData.location %></li>
+        <li><%= singleData.country %></li>
+     </ul>
+     <form method="GET" action="/listings/<%=singleData._id%>/edit">
+        <button style="background-color: crimson; color: white;">Edit</button>
+     </form> <br/>
+    <form method="POST" action="/listings/<%=singleData._id%>?_method=DELETE">
+        <button style="background-color: red; color: white;">Delete</button>
+     </form>
+
+</body>
+</html>
