@@ -1,36 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layouts/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotels Hub</title>
-</head>
+    <body>
+        
+        <div class="row">
+            
+            <div class="col-8 offset-2"><br><br>
+                <h2>Add details of your Hotel/Property!</h2><br/>
+                
+                <form method="POST" action="/listings?_method=PUT">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Hotel Name:</label>
+                        <input type="text" class="form-control" placeholder="Enter your Hotel name" id="title"
+                            name="ListingsArr[title]">
+                    </div>
 
-<body> 
-    <h2>Add details of your Hotel!</h2>
-    <form method="POST" action="/listings?_method=PUT">
-        <label>Hotel Name:</label>
-        <input type="text" placeholder="Enter your Hotel name" id ="title" name="ListingsArr[title]"><br>
 
-        <label>Description:</label>
-        <textarea name="ListingsArr[description]" placeholder="Tell something about your hotel's facilities" id="description" name="description"></textarea> <br></br>
+                    <div class="mb-3"><label for="description" class="form-label">Description:</label>
+                        <textarea name="ListingsArr[description]" class="form-control"
+                            placeholder="Tell something about your hotel's facilities" id="description"
+                            name="description"></textarea>
+                    </div>
 
-        <label>Price:</label>
-        <input type="number" placeholder="Enter best price" id ="price" name="ListingsArr[price]"> <br></br>
 
-         <label>location:</label>
-        <input type="text" placeholder="Enter correct location" id ="location" name="ListingsArr[location]"> <br></br>
+                    <div class="mb-3"><label for="location" class="form-label">location:</label>
+                        <input type="text" placeholder="Enter correct location" class="form-control" id="location"
+                            name="ListingsArr[location]">
 
-         <label>country:</label>
-        <input type="text" placeholder="Enter country" id ="country" name="ListingsArr[country]"> <br></br>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3"><label for="price" class="form-label">Price:</label>
+                            <input type="number" placeholder="Enter best price" class="form-control" id="price"
+                                name="ListingsArr[price]">
+                        </div>
 
-        <label>image:</label>
-        <input type="text" placeholder="Enter img url" id ="image" name="ListingsArr[image]"> <br></br>
+                        <div class="col-md-8 mb-3"><label for="country" class="form-label">country:</label>
+                            <input type="text" placeholder="Enter country" class="form-control" id="country"
+                                name="ListingsArr[country]">
+                        </div>
+                    </div>
 
-        <button style="background-color: rgb(107, 55, 12); color: azure;">Submit</button>
-    </form>
 
-</body>
+                    <div class="mb-3"><label for="exampleInputEmail1" class="form-label">image:</label>
+                        <input type="text" placeholder="Enter img url" id="image" class="form-control"
+                            name="ListingsArr[image]">
+                    </div>
 
-</html>
+                    <button type="button" class="btn btn-dark add-btn">Add+</button><br><br><br>
+                </form>
+            </div>
+        </div>
+
+    </body>

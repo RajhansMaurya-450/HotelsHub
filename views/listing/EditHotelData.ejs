@@ -1,32 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel's Hub</title>
-</head>
-<body>
-    <h2>Enter Details to edit form!</h2>
-    <form method="POST" action="/listings/<%= editHoteldata._id %>?_method=PUT">
-        <label>Hotel Name:</label>
-        <input type="text" value= "<%= editHoteldata.title %>" id ="title" name="ListingsArr[title]"><br>
+<% layout("/layouts/boilerplate.ejs") %>
 
-        <label>Description:</label>
-        <textarea name="ListingsArr[description]" id="description" name="description"><%= editHoteldata.description %></textarea> <br></br>
+    <body>
 
-        <label>Price:</label>
-        <input type="number" value="<%= editHoteldata.price %>" id ="price" name="ListingsArr[price]"> <br></br>
+        <div class="row">
+            <div class="col-8 mt-3 offset-2">
+                <h2>Enter Details to edit form!</h2>
 
-         <label>location:</label>
-        <input type="text"  id ="location" value="<%= editHoteldata.location %>" name="ListingsArr[location]"> <br></br>
+                <form method="POST" action="/listings/<%= editHoteldata._id %>?_method=PUT">
+                    <div class="mb-3"><label class="form-label">Hotel Name:</label>
+                        <input type="text" class="form-control" value="<%= editHoteldata.title %>" id="title"
+                            name="ListingsArr[title]">
+                    </div>
 
-         <label>country:</label>
-        <input type="text" value="<%= editHoteldata.country %>" id ="country" name="ListingsArr[country]"> <br></br>
+                    <div class="mb-3"><label class="form-label">Description:</label>
+                        <textarea name="ListingsArr[description]" id="description" class="form-control"
+                            name="description"><%= editHoteldata.description %></textarea>
+                    </div>
 
-        <label>image:</label>
-        <input type="text" value="<%= editHoteldata.image  %>" id ="image" name="ListingsArr[image]"> <br></br>
+                    <div class="row">
+                        <div class="col-md-4 mb-3"><label class="form-label">Price:</label>
+                            <input type="number" class="form-control" value="<%= editHoteldata.price %>" id="price"
+                                name="ListingsArr[price]">
+                        </div>
+                        <div class="col-md-8 mb-3"><label class="form-label">country:</label>
+                            <input type="text" class="form-control" value="<%= editHoteldata.country %>" id="country"
+                                name="ListingsArr[country]">
+                        </div>
+                    </div>
 
-        <button style="background-color: rgb(107, 55, 12); color: azure;">Submit</button>
-    </form>
-</body>
-</html>
+                    <div class="mb-3"><label class="form-label">location:</label>
+                        <input type="text" class="form-control" id="location" value="<%= editHoteldata.location %>"
+                            name="ListingsArr[location]">
+                    </div>
+
+
+                    <div class="mb-3"><label class="form-label">image:</label>
+                        <input type="text" class="form-control" value="<%= editHoteldata.image  %>" id="image"
+                            name="ListingsArr[image]">
+                    </div>
+
+                    <button type="button" class="btn btn-dark edit-btn mt-3">Apply Changes</button><br><br><br>
+                </form>
+            </div>
+        </div>
+    </body>
