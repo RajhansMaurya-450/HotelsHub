@@ -1,24 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layouts/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lisiting Data</title>
-</head>
+    <body>
+        <h1>Show Lisitng!</h1>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 ">
+            <% for( hotelsDatas of hotelsData) {%>
+                <a href="/listingData/<%= hotelsDatas._id %>" class="listing-link">
+                    <div class="card col">
+                        <img src="<%= hotelsDatas.image.url %>" class="card-img-top" alt="image" style="height: 20rem"
+                            ;>
 
-<body>
-    <h1>Show Lisitng!</h1>
-    <form method="GET" action="/listing/new">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= hotelsDatas.title %>
+                                </b> <br />
+                                ₹<%= hotelsDatas.price.toLocaleString("en-IN") %> per night
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+
+        <!-- <form method="GET" action="/listing/new">
         <button style="background-color: tomato; color: azure;">Add New Hotels</button>
-    </form>
-    <ul>
-        <% for( hotelsDatas of hotelsData) {%>
-            <li><a href="/listingData/<%= hotelsDatas._id %>"><%= hotelsDatas.title %></a>
-            </li>
-        <% } %>
-    </ul>
+    </form> -->
 
-</body>
-
-</html>
+    </body>

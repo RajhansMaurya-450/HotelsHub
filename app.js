@@ -5,11 +5,15 @@ const app = express();
 const MONGO_URL ='mongodb://127.0.0.1:27017/HotelsHub';
 const Listing = require("./models/listing.js")
 const path = require("path");
+const ejsMate = require('ejs-mate');
+
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname, "views"));
 const methodOverride = require("method-override");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.engine('ejs',ejsMate );
+app.use(express.static(path.join(__dirname,"/public")));
 
 app.listen(PORT, (req,res) => {
    console.log(`server is running on the port ${PORT}`);
