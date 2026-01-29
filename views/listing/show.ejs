@@ -1,18 +1,45 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<body>
-     <h3><%= singleData.title %></h3>
-     <ul>
-        <li><%= singleData.description %></li>
-        <li>₹<%= singleData.price.toLocaleString("en-IN") %></li>
-        <li><%= singleData.location %></li>
-        <li><%= singleData.country %></li>
-     </ul>
-     <form method="GET" action="/listings/<%=singleData._id%>/edit">
-        <button style="background-color: crimson; color: white;">Edit</button>
-     </form> <br/>
-    <form method="POST" action="/listings/<%=singleData._id%>?_method=DELETE">
-        <button style="background-color: red; color: white;">Delete</button>
-     </form>
+   <div class="row mt-3">
+      <div class="col-8 offset-2">
+         <h2>
+            Details of <%= singleData.title %>
+         </h2>
+      </div>
+      <div class="col-6 offset-2">
 
-</body>
+         <body>
+            <div class="card">
+               <img src="<%= singleData.image.url %>" class="card-img-top show-img" alt="hotel image">
+               <div class="card-body">
+                  <p class="card-text">
+                     <b>
+                        <%= singleData.title %>
+                     </b> <br />
+                     <%= singleData.description %><br />
+                        ₹<%= singleData.price.toLocaleString("en-IN") %> <br />
+                           <%= singleData.location %><br />
+                              <%= singleData.country %>
+                                 <br />
+                  </p>
+
+
+                  <div class="d-flex gap-2 mt-3">
+
+                     <form method="GET" action="/listings/<%=singleData._id%>/edit">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                     </form>
+
+
+                     <form method="POST" action="/listings/<%=singleData._id%>?_method=DELETE">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                     </form>
+                  </div>
+
+
+               </div>
+            </div>
+      </div>
+
+   </div><br />
+   </body>
