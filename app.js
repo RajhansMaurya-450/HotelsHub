@@ -60,7 +60,7 @@ app.get("/listings",async(req,res)=>{
 app.get("/listingData/:id",async(req,res)=>{
     let{id} = req.params;
     let singleData = await Listing.findById(id);
-    console.log(singleData);
+    // console.log(singleData);
     res.render("listing/show.ejs",{singleData});
 })
 app.get("/listing/new",async(req,res)=>{
@@ -73,12 +73,15 @@ app.put("/listings",async(req,res)=>{
     console.log(req.body.ListingsArr);
     res.redirect("/listings");
 })
+
 app.get("/listings/:id/edit",async(req,res)=>{
     let {id} = req.params;
     let editHoteldata = await Listing.findById(id);
-    res.render("./listing/EditHotelData.ejs",{editHoteldata});
+    console.log(id);
+    res.render("listing/EditHotelData.ejs",{editHoteldata});
 
 });
+
 app.put("/listings/:id",async(req,res)=>{
     let {id} = req.params;
     let editHoteldata = await Listing.findByIdAndUpdate(id,req.body.ListingsArr);

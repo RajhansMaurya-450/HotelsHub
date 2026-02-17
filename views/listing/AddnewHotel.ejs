@@ -7,35 +7,46 @@
             <div class="col-8 offset-2"><br><br>
                 <h2>Add details of your Hotel/Property!</h2><br/>
                 
-                <form method="POST" action="/listings?_method=PUT">
+                <form method="POST" action="/listings?_method=PUT" novalidate class="needs-validation">
                     <div class="mb-3">
                         <label for="title" class="form-label">Hotel Name:</label>
                         <input type="text" class="form-control" placeholder="Enter your Hotel name" id="title"
-                            name="ListingsArr[title]">
+                            name="ListingsArr[title]" required>
+                            <!-- "required" is used to make this field madatory and not to be left empty! -->
+                             <div class="valid-feedback">Title looks good!</div>
+                             <div class="invalid-feedback">Enter a valid title!</div>
                     </div>
 
 
                     <div class="mb-3"><label for="description" class="form-label">Description:</label>
                         <textarea name="ListingsArr[description]" class="form-control"
                             placeholder="Tell something about your hotel's facilities" id="description"
-                            name="description"></textarea>
+                            name="description" required></textarea>
+                            <div class="valid-feedback">Description looks good!</div>
+                             <div class="invalid-feedback">Enter a valid description!</div>
                     </div>
 
 
                     <div class="mb-3"><label for="location" class="form-label">location:</label>
                         <input type="text" placeholder="Enter correct location" class="form-control" id="location"
-                            name="ListingsArr[location]">
+                            name="ListingsArr[location]" required>
+                            <div class="valid-feedback">Location found</div>
+                             <div class="invalid-feedback">Enter a valid location!</div>
 
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3"><label for="price" class="form-label">Price:</label>
                             <input type="number" placeholder="Enter best price" class="form-control" id="price"
-                                name="ListingsArr[price]">
+                                name="ListingsArr[price]" required>
+                                <div class="valid-feedback">good price</div>
+                             <div class="invalid-feedback">Enter a valid price!</div>
                         </div>
 
                         <div class="col-md-8 mb-3"><label for="country" class="form-label">country:</label>
                             <input type="text" placeholder="Enter country" class="form-control" id="country"
-                                name="ListingsArr[country]">
+                                name="ListingsArr[country]" required>
+                                <div class="valid-feedback">Nice country</div>
+                             <div class="invalid-feedback">Enter a valid country!</div>
                         </div>
                     </div>
 
@@ -45,7 +56,7 @@
                             name="ListingsArr[image]">
                     </div>
 
-                    <button type="button" class="btn btn-dark add-btn">Add+</button><br><br><br>
+                    <button class="btn btn-dark add-btn">Add+</button><br><br><br>
                 </form>
             </div>
         </div>
