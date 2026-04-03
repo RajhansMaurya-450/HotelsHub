@@ -2,9 +2,11 @@
 
    <div class="row mt-3">
       <div class="col-8 offset-2">
-         <h3>
-           <b> Hotel Details </b>
-         </h3>
+         <b>
+            <h3> <i>
+                  <%= singleData.title %>
+               </i></h3>
+         </b>
       </div>
       <div class="col-6 offset-2">
 
@@ -13,9 +15,7 @@
                <img src="<%= singleData.image.url %>" class="card-img-top show-img" alt="hotel image">
                <div class="card-body">
                   <p class="card-text">
-                     <b>
-                       <h5> <i><%= singleData.title %></i></h5>
-                     </b> 
+
                      <%= singleData.description %><br />
                         ₹<%= singleData.price.toLocaleString("en-IN") %> <br />
                            <%= singleData.location %><br />
@@ -35,7 +35,19 @@
                         <button type="submit" class="btn btn-danger">Delete</button>
                      </form>
                   </div>
-
+                  <div>
+                     <hr>
+                     <h4>
+                        Share your experience with us!
+                     </h4>
+                     <form method="POST" action="/listingData/<%=singleData._id%>/reviews">
+                        <label for="rating">Rating:</label>
+                        <input type="range" id="rating" name="review[rating]" min="1" max="5"><br><br>
+                        <label for="Comment">Comments:</label><br>
+                        <textarea id="Comment" name="review[Comment]" cols="70" rows="4"></textarea><br><br>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                     </form>
+                  </div>
 
                </div>
             </div>

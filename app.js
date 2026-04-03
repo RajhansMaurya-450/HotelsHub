@@ -12,6 +12,7 @@ const ExpressError = require("./Utils/ExpressError.js"); //file required from ut
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname, "views"));
 const methodOverride = require("method-override");
+const Review = require("./models/review.js");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate );
@@ -136,6 +137,24 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
     res.redirect("/listings");
 }))
 
+
+//putting reviews to the listings
+app.post("/listingData/:id/reviews",async(req,res)=>{
+    let {id} = req.params;
+    
+    let listing = await Listing.findById(req.params.id);
+    let reviewData = await new Review(req.body.review);
+    
+    listing.reviews.push(reviewData);
+   
+    let res1 = await reviewData.save();
+     
+    let res2 = await listing.save();
+     
+    res.redirect(`/listingData/${id}`);
+
+})
+
 // simple middleware for error handling....
 // app.use((err, req, res, next) =>{
 //     res.send("Something went wrong");
@@ -151,3 +170,4 @@ app.use((err, req, res, next) =>{
     let {statusCode,message} = err;
     res.status(statusCode).render("error.ejs",{message});
 })
+
