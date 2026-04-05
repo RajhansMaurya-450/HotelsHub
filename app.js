@@ -8,15 +8,18 @@ const path = require("path");
 const ejsMate = require('ejs-mate');
 const wrapAsync = require("./Utils/wrapAsync.js"); //file required from utils folder that handles the error...
 const ExpressError = require("./Utils/ExpressError.js"); //file required from utils folder to handle error....
+const Joi = require("joi");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname, "views"));
 const methodOverride = require("method-override");
 const Review = require("./models/review.js");
+const { listingSchema,reviewSchema } = require("./schema.js");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate );
 app.use(express.static(path.join(__dirname,"/public")));
+
 
 
 
@@ -37,6 +40,27 @@ app.get("/",(req,res)=>{
     res.send("Welcome to HotelsHub!");
 })
 
+const validateListing = (req,res,next) => { //server silde validation using Joi..............
+    let{error} = listingSchema.validate(req.body);
+    if(error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400,errMsg);
+    }else{
+        next();
+    }
+
+}
+
+const validateReview = (req,res,next) => { //server silde validation for reviews using Joi..............
+    let{error} = reviewSchema.validate(req.body);
+    if(error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400,errMsg);
+    }else{
+        next();
+    }
+
+}
 //listing Route
 // create object from models
 // app.get("/listing",async (req,res)=>{
@@ -64,7 +88,7 @@ app.get("/listings",wrapAsync(async(req,res)=>{
 
 app.get("/listingData/:id",wrapAsync(async(req,res)=>{
     let{id} = req.params;
-    let singleData = await Listing.findById(id);
+    let singleData = await Listing.findById(id).populate("reviews");
     // console.log(singleData);
     res.render("listing/show.ejs",{singleData});
 }))
@@ -139,7 +163,7 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
 
 
 //putting reviews to the listings
-app.post("/listingData/:id/reviews",async(req,res)=>{
+app.post("/listingData/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
     let {id} = req.params;
     
     let listing = await Listing.findById(req.params.id);
@@ -152,8 +176,18 @@ app.post("/listingData/:id/reviews",async(req,res)=>{
     let res2 = await listing.save();
      
     res.redirect(`/listingData/${id}`);
+    
 
-})
+}));
+
+//dELETEING specific reviews using thier IDs................
+app.delete("/listingData/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+    let {id,reviewId} = req.params;
+    await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+
+     res.redirect(`/listingData/${id}`);
+}));
 
 // simple middleware for error handling....
 // app.use((err, req, res, next) =>{

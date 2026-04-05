@@ -11,7 +11,7 @@
       <div class="col-6 offset-2">
 
          <body>
-            <div class="card">
+            <div class="card listing-card">
                <img src="<%= singleData.image.url %>" class="card-img-top show-img" alt="hotel image">
                <div class="card-body">
                   <p class="card-text">
@@ -40,13 +40,41 @@
                      <h4>
                         Share your experience with us!
                      </h4>
-                     <form method="POST" action="/listingData/<%=singleData._id%>/reviews">
+                     <form method="POST" action="/listingData/<%=singleData._id%>/reviews" novalidate
+                        class="needs-validation">
                         <label for="rating">Rating:</label>
                         <input type="range" id="rating" name="review[rating]" min="1" max="5"><br><br>
+
                         <label for="Comment">Comments:</label><br>
-                        <textarea id="Comment" name="review[Comment]" cols="70" rows="4"></textarea><br><br>
+                        <textarea id="Comment" name="review[Comment]" cols="70" rows="4" required></textarea>
+                        <div class="invalid-feedback">Required field cannot be empty!</div><br><br>
                         <button type="submit" class="btn btn-success">Submit</button>
                      </form>
+                     <hr>
+                     <p><b>Reviews</b></p>
+                     <div class="row">
+                        <% for(review of singleData.reviews) { %>
+                           <div class="card col-5 ms-3 mb-3">
+                              <div class="card-body">
+                                 <h5 class="card-title">Tony Stank</h5>
+                                 <p class="card-text">
+                                    <%= review.Comment %>
+                                 </p>
+
+                                 <p class="card-text">
+                                    <%= review.rating %> Stars
+                                 </p>
+                                    <form class="mb-3" method="post" action="/listingData/<%=singleData._id%>/reviews/<%= review._id %>?_method=DELETE">
+                                       <button class="btn btn-danger btn-sm mb-3">Delete</button>
+                                    </form>
+                              </div>
+                           </div>
+                           <% } %>
+                     </div>
+
+
+
+
                   </div>
 
                </div>
