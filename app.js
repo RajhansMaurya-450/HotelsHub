@@ -10,6 +10,7 @@ const wrapAsync = require("./Utils/wrapAsync.js"); //file required from utils fo
 const ExpressError = require("./Utils/ExpressError.js"); //file required from utils folder to handle error....
 const Joi = require("joi");
 const listingRouter = require("./routes/listings.js")
+const reviewRouter = require("./routes/review.js")
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname, "views"));
@@ -52,16 +53,7 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 
 }
 
-const validateReview = (req,res,next) => { //server side validation for reviews using Joi..............
-    let{error} = reviewSchema.validate(req.body);
-    if(error) {
-        let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }else{
-        next();
-    }
 
-}
 //listing Route
 // create object from models
 // app.get("/listing",async (req,res)=>{
@@ -90,36 +82,12 @@ app.get("/listing/new",wrapAsync(async(req,res)=>{
     res.render("listing/AddnewHotel.ejs");
 }))
 
-app.use("/listings",listingRouter);
+app.use("/listings",listingRouter); //this route is used to access the CRUD opteration routes by using express router....
+
+app.use("/listingData/:id/reviews",reviewRouter); //this route is used to
 
 
 
-//putting reviews to the listings
-app.post("/listingData/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
-    let {id} = req.params;
-    
-    let listing = await Listing.findById(req.params.id);
-    let reviewData = await new Review(req.body.review);
-    
-    listing.reviews.push(reviewData);
-   
-    let res1 = await reviewData.save();
-     
-    let res2 = await listing.save();
-     
-    res.redirect(`/listingData/${id}`);
-    
-
-}));
-
-//dELETEING specific reviews using thier IDs................
-app.delete("/listingData/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
-    let {id,reviewId} = req.params;
-    await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
-    await Review.findByIdAndDelete(reviewId);
-
-     res.redirect(`/listingData/${id}`);
-}));
 
 // simple middleware for error handling....
 // app.use((err, req, res, next) =>{
@@ -133,7 +101,9 @@ app.use((req,res,next)=>{
 
 //middleware for error handling using Express Error....
 app.use((err, req, res, next) =>{
-    let {statusCode,message} = err;
+    let {message} = err;
+    let statusCode = err.statusCode || 500;
+
     res.status(statusCode).render("error.ejs",{message});
 })
 

@@ -1,5 +1,5 @@
 const express = require ("express");
-const router = express.Router();
+const router = express.Router({mergeParams:true});
 const Listing = require("../models/listing.js")
 const wrapAsync = require("../Utils/wrapAsync.js"); //file required from utils folder that handles the error...
 const ExpressError = require("../Utils/ExpressError.js"); //file required from utils folder to handle error....
