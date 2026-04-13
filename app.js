@@ -5,23 +5,38 @@ const app = express();
 const MONGO_URL ='mongodb://127.0.0.1:27017/HotelsHub';
 const Listing = require("./models/listing.js")
 const path = require("path");
-const ejsMate = require('ejs-mate');
+const ejsMate = require('ejs-mate'); //for the modularity of ejs repeated codes...............
 const wrapAsync = require("./Utils/wrapAsync.js"); //file required from utils folder that handles the error...
 const ExpressError = require("./Utils/ExpressError.js"); //file required from utils folder to handle error....
 const Joi = require("joi");
 const listingRouter = require("./routes/listings.js")
 const reviewRouter = require("./routes/review.js")
+const session = require('express-session');
+const sessionOptions = {  //session Object...............
+    secret: "musssession",
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+        expires:Date.now()+15*24*60*60*60*1000,
+        maxAge:15*24*60*60*60*1000,
+        httpOnly:true
+    },
+};
+const flash = require("connect-flash");
 
-app.set("view engine","ejs");
-app.set("views",path.join(__dirname, "views"));
+
+app.set("view engine","ejs"); // use to render the ejs files..............
+app.set("views",path.join(__dirname, "views"));// use to render the ejs files..............
 const methodOverride = require("method-override");
 const Review = require("./models/review.js");
 const { listingSchema,reviewSchema } = require("./schema.js");
+const { maxHeaderSize } = require("http");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate );
 app.use(express.static(path.join(__dirname,"/public")));
-
+app.use(session(sessionOptions)); //session middleware.........
+app.use(flash());
 
 
 
@@ -41,7 +56,10 @@ async function main() {
 app.get("/",(req,res)=>{
     res.send("Welcome to HotelsHub!");
 })
-
+app.use((req,res,next)=>{
+    res.locals.sucessMsg = req.flash("success");
+    next();
+});
 const validateListing = (req,res,next) => { //server silde validation using Joi..............
     let{error} = listingSchema.validate(req.body);
     if(error) {

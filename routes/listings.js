@@ -5,6 +5,7 @@ const wrapAsync = require("../Utils/wrapAsync.js"); //file required from utils f
 const ExpressError = require("../Utils/ExpressError.js"); //file required from utils folder to handle error....
 const { listingSchema,reviewSchema } = require("../schema.js");
 
+
 //wrapAsync here & in other places of Asyn function is used that if the error occured on any route it will directed to the relevant error page.................
 router.get("/",wrapAsync(async(req,res)=>{
     let hotelsData = await Listing.find();
@@ -46,6 +47,7 @@ router.put("/",wrapAsync(async(req,res)=>{
     }
     let newListing = new Listing(req.body.ListingsArr);
     await newListing.save();
+    req.flash("success","New Property added Sucessfully!");
     console.log(req.body.ListingsArr);
     res.redirect("/listings");
 }));
