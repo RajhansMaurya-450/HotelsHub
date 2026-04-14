@@ -57,7 +57,8 @@ app.get("/",(req,res)=>{
     res.send("Welcome to HotelsHub!");
 })
 app.use((req,res,next)=>{
-    res.locals.sucessMsg = req.flash("success");
+    res.locals.successMsg = req.flash("success");
+    res.locals.errorMsg = req.flash("error");
     next();
 });
 const validateListing = (req,res,next) => { //server silde validation using Joi..............
@@ -89,11 +90,19 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 //     res.send("hello");
 // })
 
+//show route...........
 app.get("/listingData/:id",wrapAsync(async(req,res)=>{
     let{id} = req.params;
     let singleData = await Listing.findById(id).populate("reviews");
     // console.log(singleData);
-    res.render("listing/show.ejs",{singleData});
+    if(!singleData){
+        req.flash("error","The Item Your have requested does not exist or deleted!");
+        res.redirect("/listings");
+    }
+    else{
+        res.render("listing/show.ejs",{singleData});
+    }
+    
 }))
 
 app.get("/listing/new",wrapAsync(async(req,res)=>{

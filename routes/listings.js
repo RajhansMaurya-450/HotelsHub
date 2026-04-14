@@ -70,6 +70,7 @@ router.put("/:id",wrapAsync(async(req,res)=>{
     let {id} = req.params;
     let editHoteldata = await Listing.findByIdAndUpdate(id,req.body.ListingsArr);
     console.log(editHoteldata);
+    req.flash("success","Property Details Updated!");
     res.redirect(`/listingData/${id}`);
 }))
 
@@ -78,6 +79,7 @@ router.delete("/:id",wrapAsync(async(req,res)=>{
      let {id} = req.params;
     let editHoteldata = await Listing.findByIdAndDelete(id);
     console.log(editHoteldata);
+    req.flash("success","Property Deleted Sucessfully!");
     res.redirect("/listings");
 }))
 
