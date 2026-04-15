@@ -11,6 +11,7 @@ const ExpressError = require("./Utils/ExpressError.js"); //file required from ut
 const Joi = require("joi");
 const listingRouter = require("./routes/listings.js")
 const reviewRouter = require("./routes/review.js")
+const userrouter = require("./routes/user.js")
 const session = require('express-session');
 const sessionOptions = {  //session Object...............
     secret: "musssession",
@@ -23,6 +24,10 @@ const sessionOptions = {  //session Object...............
     },
 };
 const flash = require("connect-flash");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
+
 
 
 app.set("view engine","ejs"); // use to render the ejs files..............
@@ -35,8 +40,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate );
 app.use(express.static(path.join(__dirname,"/public")));
+
+
+
 app.use(session(sessionOptions)); //session middleware.........
 app.use(flash());
+
+app.use(passport.initialize()); //passport middleware and user intialization......................
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());//serialize and deserialize user is used by passport to manage user session...they determine how user info is stored in the session and how it is retrieved in subsequent request..............
+passport.deserializeUser(User.deserializeUser());
+
 
 
 
@@ -61,6 +77,19 @@ app.use((req,res,next)=>{
     res.locals.errorMsg = req.flash("error");
     next();
 });
+
+// app.get("/demouser",async(req,res)=>{ //demo user for login authentication...............
+//     let fakeUser = new User({
+//         email: "student@gmail.com",
+//         username: "delta-student"
+//     });
+
+//    let registeredUser = await User.register(fakeUser,"helloworld");
+//    res.send(registeredUser);
+// })
+
+
+
 const validateListing = (req,res,next) => { //server silde validation using Joi..............
     let{error} = listingSchema.validate(req.body);
     if(error) {
@@ -109,11 +138,14 @@ app.get("/listing/new",wrapAsync(async(req,res)=>{
     res.render("listing/AddnewHotel.ejs");
 }))
 
+
+
 app.use("/listings",listingRouter); //this route is used to access the CRUD opteration routes by using express router....
 
-app.use("/listingData/:id/reviews",reviewRouter); //this route is used to
+app.use("/listingData/:id/reviews",reviewRouter); //this route is used to add review particular listings
 
-
+//signup route................
+app.use("/",userrouter);
 
 
 // simple middleware for error handling....
