@@ -27,6 +27,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user.js");
+const {isLoggedIn} = require("./middleware.js");//reuiring middileware.js to check if the user is logged in or not......
 
 
 
@@ -75,6 +76,7 @@ app.get("/",(req,res)=>{
 app.use((req,res,next)=>{
     res.locals.successMsg = req.flash("success");
     res.locals.errorMsg = req.flash("error");
+    res.locals.currUser = req.user;
     next();
 });
 
@@ -134,9 +136,10 @@ app.get("/listingData/:id",wrapAsync(async(req,res)=>{
     
 }))
 
-app.get("/listing/new",wrapAsync(async(req,res)=>{
+app.get("/listing/new",isLoggedIn,(req,res)=>{
+
     res.render("listing/AddnewHotel.ejs");
-}))
+})
 
 
 

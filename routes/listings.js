@@ -4,6 +4,7 @@ const Listing = require("../models/listing.js")
 const wrapAsync = require("../Utils/wrapAsync.js"); //file required from utils folder that handles the error...
 const ExpressError = require("../Utils/ExpressError.js"); //file required from utils folder to handle error....
 const { listingSchema,reviewSchema } = require("../schema.js");
+const {isLoggedIn} = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
 
 
 //wrapAsync here & in other places of Asyn function is used that if the error occured on any route it will directed to the relevant error page.................
@@ -40,7 +41,7 @@ router.get("/",wrapAsync(async(req,res)=>{
 
 //Error handling using wrapAsync method................
 //create ROute
-router.put("/",wrapAsync(async(req,res)=>{
+router.put("/",isLoggedIn,wrapAsync(async(req,res)=>{
 
     if(!req.body.ListingsArr){
         throw new ExpressError(400,"ENTER A VALID DATA FOR LISTING!");
@@ -52,7 +53,8 @@ router.put("/",wrapAsync(async(req,res)=>{
     res.redirect("/listings");
 }));
 
-router.get("/:id/edit",wrapAsync(async(req,res)=>{
+//edit route.......
+router.get("/:id/edit",isLoggedIn,wrapAsync(async(req,res)=>{
     let {id} = req.params;
     let editHoteldata = await Listing.findById(id);
     console.log(id);
@@ -75,12 +77,14 @@ router.put("/:id",wrapAsync(async(req,res)=>{
 }))
 
 //Delete ROute..............
-router.delete("/:id",wrapAsync(async(req,res)=>{
+router.delete("/:id",isLoggedIn,wrapAsync(async(req,res)=>{
      let {id} = req.params;
     let editHoteldata = await Listing.findByIdAndDelete(id);
     console.log(editHoteldata);
     req.flash("success","Property Deleted Sucessfully!");
     res.redirect("/listings");
 }))
+
+
 
 module.exports = router
