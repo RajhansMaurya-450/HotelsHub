@@ -4,9 +4,18 @@ const Listing = require("../models/listing.js")
 const wrapAsync = require("../Utils/wrapAsync.js"); //file required from utils folder that handles the error...
 const ExpressError = require("../Utils/ExpressError.js"); //file required from utils folder to handle error....
 const { listingSchema,reviewSchema } = require("../schema.js");
-const {isLoggedIn} = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
+const {isLoggedIn, isOwner} = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
 
+const validateListing = (req,res,next) => { //server silde validation using Joi..............
+    let{error} = listingSchema.validate(req.body);
+    if(error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400,errMsg);
+    }else{
+        next();
+    }
 
+}
 //wrapAsync here & in other places of Asyn function is used that if the error occured on any route it will directed to the relevant error page.................
 router.get("/",wrapAsync(async(req,res)=>{
     let hotelsData = await Listing.find();
@@ -47,6 +56,7 @@ router.put("/",isLoggedIn,wrapAsync(async(req,res)=>{
         throw new ExpressError(400,"ENTER A VALID DATA FOR LISTING!");
     }
     let newListing = new Listing(req.body.ListingsArr);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("success","New Property added Sucessfully!");
     console.log(req.body.ListingsArr);
@@ -54,7 +64,7 @@ router.put("/",isLoggedIn,wrapAsync(async(req,res)=>{
 }));
 
 //edit route.......
-router.get("/:id/edit",isLoggedIn,wrapAsync(async(req,res)=>{
+router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(async(req,res)=>{
     let {id} = req.params;
     let editHoteldata = await Listing.findById(id);
     console.log(id);
@@ -63,21 +73,21 @@ router.get("/:id/edit",isLoggedIn,wrapAsync(async(req,res)=>{
 }));
 
 //Update ROute................
-router.put("/:id",wrapAsync(async(req,res)=>{
+router.put("/:id", isLoggedIn, isOwner,wrapAsync(async(req,res)=>{
 
     if(!req.body.ListingsArr){
         throw new ExpressError(400,"ENTER A VALID DATA FOR LISTING!");
     }
 
     let {id} = req.params;
-    let editHoteldata = await Listing.findByIdAndUpdate(id,req.body.ListingsArr);
+    let editHoteldata = await Listing.findByIdAndUpdate(id,{...req.body.ListingsArr});
     console.log(editHoteldata);
     req.flash("success","Property Details Updated!");
     res.redirect(`/listingData/${id}`);
 }))
 
 //Delete ROute..............
-router.delete("/:id",isLoggedIn,wrapAsync(async(req,res)=>{
+router.delete("/:id",isLoggedIn,isOwner,wrapAsync(async(req,res)=>{
      let {id} = req.params;
     let editHoteldata = await Listing.findByIdAndDelete(id);
     console.log(editHoteldata);

@@ -20,9 +20,10 @@ const insertDB = async() => {
     await Listing.deleteMany({});
      console.log("DB cleared!");
     // console.log(newData.data);
+    newData.data = newData.data.map((obj) => ({...obj, owner: "69e22a9051972ae78efe1997"}))
      await Listing.insertMany(newData.data);
     console.log("Data inserted!");
 
 };
 
-//insertDB();
+ //insertDB();

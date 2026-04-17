@@ -3,6 +3,7 @@ const wrapAsync = require("../Utils/wrapAsync");
 const router = express.Router();
 const User = require("../models/user.js");
 const passport = require("passport");
+const {saveRedirectUrl} = require("../middleware.js")
 
 router.get("/signup", (req, res) => {
     res.render("users/signup.ejs");
@@ -19,7 +20,7 @@ router.post("/signup", wrapAsync(async (req, res) => {
         req.login(registeredUser, (err) => {
             if (err) {
                 req.flash("error", "An error occured during login, PLease logging in manually..!");
-                res.redirect("/lisitngs");
+                res.redirect("/listings");
             }
             req.flash("success", `Welcome to the HotelsHub ${registeredUser.username}!`);
             res.redirect("/listings");
@@ -40,13 +41,15 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login",
+    saveRedirectUrl,
     passport.authenticate("local", {
         failureRedirect: "/login",
         failureFlash: true,
     }),
     async (req, res) => {
         req.flash("success", `Welcome Back to Hotels Hub ${req.user.username}`);
-        res.redirect("/listings");
+        let redirectUrl = res.locals.redirectUrl || "/listings";
+        res.redirect(redirectUrl);
     }
 );
 

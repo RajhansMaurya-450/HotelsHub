@@ -35,6 +35,12 @@ const listingSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Review",
     }
+  ],
+  owner: [
+    { //refrencing
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    }
   ]
 
 });
