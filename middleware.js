@@ -27,4 +27,5 @@ module.exports.isOwner = async(req,res,next) => {
         return res.redirect(`/listingData/${id}`);
     }
     next();
+    //owner info middelware
 };
