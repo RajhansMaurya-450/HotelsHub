@@ -5,27 +5,32 @@ const ExpressError = require("../Utils/ExpressError.js"); //file required from u
 const { listingSchema,reviewSchema } = require("../schema.js");
 const Review = require("../models/review.js");
 const Joi = require("joi");
-const Listing = require("../models/listing.js")
+const Listing = require("../models/listing.js");
+const{validateReview, isLoggedIn, isReviewAuthor} = require("../middleware.js");
 
 
 
-const validateReview = (req,res,next) => { //server side validation for reviews using Joi..............
-    let{error} = reviewSchema.validate(req.body);
-    if(error) {
-        let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }else{
-        next();
-    }
+// const validateReview = (req,res,next) => { //server side validation for reviews using Joi..............
+//     let{error} = reviewSchema.validate(req.body);
+//     if(error) {
+//         let errMsg = error.details.map((el) => el.message).join(",");
+//         throw new ExpressError(400,errMsg);
+//     }else{
+//         next();
+//     }
 
-}
+// }
 
 //putting reviews to the listings
-router.post("/",validateReview,wrapAsync(async(req,res)=>{
+router.post("/",
+    isLoggedIn,
+    validateReview,wrapAsync(async(req,res)=>{
     let {id} = req.params;
     
     let listing = await Listing.findById(req.params.id);
     let reviewData = await new Review(req.body.review);
+    reviewData.author = req.user._id;
+    console.log(reviewData);
     
     listing.reviews.push(reviewData);
    
@@ -39,7 +44,10 @@ router.post("/",validateReview,wrapAsync(async(req,res)=>{
 }));
 
 //dELETEING specific reviews using thier IDs................
-router.delete("/:reviewId",wrapAsync(async(req,res)=>{
+router.delete("/:reviewId",
+    isLoggedIn, 
+    isReviewAuthor,
+    wrapAsync(async(req,res)=>{
     let {id,reviewId} = req.params;
     await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
     await Review.findByIdAndDelete(reviewId);

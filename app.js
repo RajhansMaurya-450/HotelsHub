@@ -124,7 +124,14 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 //show route...........
 app.get("/listingData/:id",wrapAsync(async(req,res)=>{
     let{id} = req.params;
-    let singleData = await Listing.findById(id).populate("reviews").populate("owner");
+    let singleData = await Listing.findById(id)
+    .populate({
+        path: "reviews",
+    populate: {
+        path: "author"
+    },
+    })
+    .populate("owner");
     console.log(singleData);
     if(!singleData){
         req.flash("error","The Item Your have requested does not exist or deleted!");

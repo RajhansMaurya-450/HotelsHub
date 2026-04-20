@@ -1,4 +1,7 @@
 const Listing = require("./models/listing");
+const ExpressError = require("./Utils/ExpressError.js"); //file required from utils folder to handle error....
+const Review = require("./models/review.js");
+const { listingSchema,reviewSchema } = require("./schema.js");
 
 module.exports.isLoggedIn = (req,res,next) => {
     if(!req.isAuthenticated()) {
@@ -29,3 +32,25 @@ module.exports.isOwner = async(req,res,next) => {
     next();
     //owner info middelware
 };
+
+module.exports.validateReview = (req,res,next) => { //server side validation for reviews using Joi..............
+    let{error} = reviewSchema.validate(req.body);
+    if(error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400,errMsg);
+    }else{
+        next();
+    }
+
+}
+
+module.exports.isReviewAuthor = async(req,res,next) => { //server side validation for reviews using Joi..............
+    let{id, reviewId} = req.params;
+    let review = await Review.findById(reviewId);
+    if(!review.author.equals(res.locals.currUser._id)) {
+        req.flash("error","you are not the author of this review");
+        return res.redirect(`/listingData/${id}`);
+    }
+        next();
+    }
+
