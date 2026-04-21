@@ -44,7 +44,7 @@ module.exports.validateReview = (req,res,next) => { //server side validation for
 
 }
 
-module.exports.isReviewAuthor = async(req,res,next) => { //server side validation for reviews using Joi..............
+module.exports.isReviewAuthor = async(req,res,next) => { //server side validation for reviews using Joi..........
     let{id, reviewId} = req.params;
     let review = await Review.findById(reviewId);
     if(!review.author.equals(res.locals.currUser._id)) {
@@ -52,5 +52,5 @@ module.exports.isReviewAuthor = async(req,res,next) => { //server side validatio
         return res.redirect(`/listingData/${id}`);
     }
         next();
-    }
+    } 
 

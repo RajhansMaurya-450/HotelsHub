@@ -17,7 +17,7 @@ router.post("/signup", wrapAsync(async (req, res) => {
         const registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
 
-        req.login(registeredUser, (err) => {
+        req.login(registeredUser, (err) => {//login route........
             if (err) {
                 req.flash("error", "An error occured during login, PLease logging in manually..!");
                 res.redirect("/listings");
