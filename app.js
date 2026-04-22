@@ -28,7 +28,7 @@ const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user.js");
 const {isLoggedIn} = require("./middleware.js");//reuiring middileware.js to check if the user is logged in or not......
-
+const ListingController = require("./controller/listings.js"); 
 
 
 app.set("view engine","ejs"); // use to render the ejs files..............
@@ -122,31 +122,9 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 // })
 
 //show route...........
-app.get("/listingData/:id",wrapAsync(async(req,res)=>{
-    let{id} = req.params;
-    let singleData = await Listing.findById(id)
-    .populate({
-        path: "reviews",
-    populate: {
-        path: "author"
-    },
-    })
-    .populate("owner");
-    console.log(singleData);
-    if(!singleData){
-        req.flash("error","The Item Your have requested does not exist or deleted!");
-        res.redirect("/listings");
-    }
-    else{
-        res.render("listing/show.ejs",{singleData});
-    }
-    
-}))
+app.get("/listingData/:id",wrapAsync(ListingController.showlisting)); //mvc logic for show route..........
 
-app.get("/listing/new",isLoggedIn,(req,res)=>{
-
-    res.render("listing/AddnewHotel.ejs");
-})
+app.get("/listing/new",isLoggedIn,ListingController.rendernewForm);//mvc logic for the adding listings..............
 
 
 

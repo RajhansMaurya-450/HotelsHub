@@ -23,8 +23,9 @@
                                  <%= singleData.country %>
                                     <br />
                   </p>
-                  <% if ( currUser && singleData.owner && singleData.owner.toString()===currUser._id.toString() )
-                     { %>
+                  <% if ( currUser && singleData.owner && singleData.owner.some(owner=> owner._id.toString() ===
+                     currUser._id.toString())
+                     ) { %>
 
                      <div class="d-flex gap-2 mt-3">
 
@@ -62,7 +63,8 @@
                                     <% for(review of singleData.reviews) { %>
                                        <div class="card col-5 ms-3 mb-3">
                                           <div class="card-body">
-                                             <h5 class="card-title">@<%= review.author.username %></h5>
+                                             <h5 class="card-title">@<%= review.author.username %>
+                                             </h5>
                                              <p class="card-text">
                                                 <%= review.Comment %>
                                              </p>
