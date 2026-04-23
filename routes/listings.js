@@ -6,8 +6,17 @@ const ExpressError = require("../Utils/ExpressError.js"); //file required from u
 const { listingSchema,reviewSchema } = require("../schema.js");
 const {isLoggedIn, isOwner} = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
 const ListingController = require("../controller/listings.js");
-const multer  = require('multer') //m
-const upload = multer({ dest: 'uploads/' })
+
+
+
+const multer  = require('multer') //multer is used for storing files from client side...........
+//const upload = multer({ dest: 'uploads/' })
+const { storage } = require("../cloudConfig.js");
+
+const upload = multer({storage})
+
+
+
 const validateListing = (req,res,next) => { //server silde validation using Joi..............
     let{error} = listingSchema.validate(req.body);
     if(error) {
