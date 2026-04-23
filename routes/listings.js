@@ -6,6 +6,8 @@ const ExpressError = require("../Utils/ExpressError.js"); //file required from u
 const { listingSchema,reviewSchema } = require("../schema.js");
 const {isLoggedIn, isOwner} = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
 const ListingController = require("../controller/listings.js");
+const multer  = require('multer') //m
+const upload = multer({ dest: 'uploads/' })
 const validateListing = (req,res,next) => { //server silde validation using Joi..............
     let{error} = listingSchema.validate(req.body);
     if(error) {
@@ -21,8 +23,15 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 router.route("/")
 
         .get(wrapAsync(ListingController.Index))//applying mvc logic............
+
         //create ROute
-        .put(isLoggedIn,wrapAsync(ListingController.createListing));
+        // .put(isLoggedIn,wrapAsync(ListingController.createListing));
+
+        .put( upload.single('ListingsArr[image]'),(req,res)=>{
+            res.send(req.file);
+        });
+
+
 
 
 // Create listing route......................

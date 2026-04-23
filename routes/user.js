@@ -11,13 +11,13 @@ const UserController = require("../controller/user.js")
 //SignUp routes..........
 router.route("/signup")
 .get( UserController.renderSignUpForm)
-.post("/signup", wrapAsync(UserController.SignUpUser));
+.post( wrapAsync(UserController.SignUpUser));
 
 
 //login route.........................
 router.route("/login")
 .get( UserController.renderLoginForm)
-.post("/login",
+.post(
     saveRedirectUrl,
     passport.authenticate("local", {
         failureRedirect: "/login",

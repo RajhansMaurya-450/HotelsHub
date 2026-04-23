@@ -1,3 +1,6 @@
+if(process.env.NODE !== "production"){
+    require("dotenv").config();
+}
 const express = require("express");
 const mongoose = require("mongoose");
 const PORT = 2020;

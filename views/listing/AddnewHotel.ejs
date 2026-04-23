@@ -7,7 +7,7 @@
             <div class="col-8 offset-2"><br><br>
                 <h2>Add details of your Hotel/Property!</h2><br/>
                 
-                <form method="POST" action="/listings?_method=PUT" novalidate class="needs-validation">
+                <form enctype="multipart/form-data"  method="POST" action="/listings?_method=PUT" novalidate class="needs-validation">
                     <div class="mb-3">
                         <label for="title" class="form-label">Hotel Name:</label>
                         <input type="text" class="form-control" placeholder="Enter your Hotel name" id="title"
@@ -51,9 +51,12 @@
                     </div>
 
 
-                    <div class="mb-3"><label for="exampleInputEmail1" class="form-label">image:</label>
-                        <input type="text" placeholder="Enter img url" id="image" class="form-control"
-                            name="ListingsArr[image]">
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Upload Image:</label>
+                            <input type="file" placeholder="Enter country" class="form-control" id="country"
+                                name="ListingsArr[image]" required>
+                                <div class="valid-feedback">Valid file path!</div>
+                             <div class="invalid-feedback">Enter a valid file!</div>
                     </div>
 
                     <button class="btn btn-dark add-btn">Add+</button><br><br><br>
