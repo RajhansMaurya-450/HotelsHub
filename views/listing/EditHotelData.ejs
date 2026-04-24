@@ -6,7 +6,7 @@
             <div class="col-8 mt-3 offset-2">
                 <h2>Enter Details to edit form!</h2>
 
-                <form method="POST" action="/listings/<%= editHoteldata._id %>?_method=PUT" novalidate class="needs-validation">
+                <form enctype="multipart/form-data" method="POST" action="/listings/<%= editHoteldata._id %>?_method=PUT" novalidate class="needs-validation">
                     <div class="mb-3"><label class="form-label">Hotel Name:</label>
                         <input type="text" class="form-control" value="<%= editHoteldata.title %>" id="title"
                             name="ListingsArr[title]" required>
@@ -45,11 +45,21 @@
                     </div>
 
 
-                    <div class="mb-3"><label class="form-label">image:</label>
+                    <!-- <div class="mb-3"><label class="form-label">image:</label>
                         <input type="text" class="form-control" value="<%= editHoteldata.image.url  %>" id="image"
                             name="ListingsArr[image][url]">
-                            <!-- here we need only imgae url to display image so if we use only [image] it access whole body/obj so we need [image][url] -->
-                             <!-- so  value="<%= editHoteldata.image.url  %> is used to use image url we need .url to access image. -->
+                        
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label class="form-label">Current Image:</label>
+                        <img src="<%= originalImageUrl %>">
+                    </div>
+
+                    <div class="mb-3"><label class="form-label">Upload image:</label>
+                        <input type="file" class="form-control" id="image"
+                            name="ListingsArr[image]">
+                           
                     </div>
 
                     <button type="submit" class="btn btn-dark edit-btn mt-3">Apply Changes</button><br><br><br>

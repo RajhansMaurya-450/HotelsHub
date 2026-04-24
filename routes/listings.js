@@ -1,28 +1,29 @@
-const express = require ("express");
-const router = express.Router({mergeParams:true});
+const express = require("express");
+const router = express.Router({ mergeParams: true });
 const Listing = require("../models/listing.js")
 const wrapAsync = require("../Utils/wrapAsync.js"); //file required from utils folder that handles the error...
 const ExpressError = require("../Utils/ExpressError.js"); //file required from utils folder to handle error....
-const { listingSchema,reviewSchema } = require("../schema.js");
-const {isLoggedIn, isOwner} = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
+const { listingSchema, reviewSchema } = require("../schema.js");
+const { isLoggedIn, isOwner } = require("../middleware.js");//reuiring middileware.js to check if the user is logged in or not......
 const ListingController = require("../controller/listings.js");
 
 
 
-const multer  = require('multer') //multer is used for storing files from client side...........
+const multer = require('multer') //multer is used for storing files from client side...........
 //const upload = multer({ dest: 'uploads/' })
 const { storage } = require("../cloudConfig.js");
+const { validate } = require("../models/review.js");
 
-const upload = multer({storage})
+const upload = multer({ storage })
 
 
 
-const validateListing = (req,res,next) => { //server silde validation using Joi..............
-    let{error} = listingSchema.validate(req.body);
-    if(error) {
+const validateListing = (req, res, next) => { //server silde validation using Joi..............
+    let { error } = listingSchema.validate(req.body);
+    if (error) {
         let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }else{
+        throw new ExpressError(400, errMsg);
+    } else {
         next();
     }
 
@@ -31,14 +32,17 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 
 router.route("/")
 
-        .get(wrapAsync(ListingController.Index))//applying mvc logic............
+    .get(wrapAsync(ListingController.Index))//applying mvc logic............
 
-        //create ROute
-        // .put(isLoggedIn,wrapAsync(ListingController.createListing));
+    //create ROute
+    .put(isLoggedIn,
+        upload.single("ListingsArr[image]"),
+        validateListing,
+        wrapAsync(ListingController.createListing));
 
-        .put( upload.single('ListingsArr[image]'),(req,res)=>{
-            res.send(req.file);
-        });
+// .put( upload.single('ListingsArr[image]'),(req,res)=>{
+//     res.send(req.file);
+// });
 
 
 
@@ -62,7 +66,7 @@ router.route("/")
 //     }catch(err) {
 //         next(err);
 //     }
-   
+
 // })
 //Error handling using wrapAsync method................
 
@@ -70,14 +74,14 @@ router.route("/")
 
 
 //edit route.......
-router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(ListingController.editListing));
+router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(ListingController.editListing));
 
 router.route("/:id")
-//Update ROute................
-.put( isLoggedIn, isOwner,wrapAsync(ListingController.updateListing))
+    //Update ROute................
+    .put(isLoggedIn, isOwner, upload.single("ListingsArr[image]"), wrapAsync(ListingController.updateListing))
 
-//Delete ROute..............
-.delete(isLoggedIn,isOwner,wrapAsync(ListingController.deleteListing));
+    //Delete ROute..............
+    .delete(isLoggedIn, isOwner, wrapAsync(ListingController.deleteListing));
 
 
 
