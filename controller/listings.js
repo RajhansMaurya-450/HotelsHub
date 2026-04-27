@@ -1,7 +1,8 @@
 const Listing = require("../models/listing.js");
 const ExpressError = require("../Utils/ExpressError.js"); //file required from utils folder to handle error....
 const { isLoggedIn, isOwner } = require("../middleware.js");
-
+const axios = require("axios");
+const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
 
 
 module.exports.Index = async (req, res) => { //mvcc logic for Index route................
@@ -28,7 +29,7 @@ module.exports.showlisting = async (req, res) => {
             },
         })
         .populate("owner");
-    console.log(singleData);
+    
     if (!singleData) {
         req.flash("error", "The Item Your have requested does not exist or deleted!");
         res.redirect("/listings");
@@ -40,22 +41,90 @@ module.exports.showlisting = async (req, res) => {
 }
 
 //create listing route..........
-module.exports.createListing = async (req, res) => {
 
+async function getCoordinates(location, country) {
+    // combine both for better accuracy
+    const fullLocation = `${location}, ${country}`;
+
+    const url = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(fullLocation)}&apiKey=${GEOAPIFY_API_KEY}`;
+
+    const response = await axios.get(url); //to fetch data from url........
+    const features = response.data.features;
+
+    if (!features || features.length === 0) {
+        throw new Error("Location not found");
+    }
+
+    return features[0].geometry.coordinates; // [lng, lat]
+}
+ module.exports.createListing = async (req, res) => {
+    
     // if(!req.body.ListingsArr){
     //     throw new ExpressError(400,"ENTER A VALID DATA FOR LISTING!");
     // }
     let url = req.file.path;
     let filename = req.file.filename;
-    console.log(url + ".." + filename);
+   
+    // 📍 1. Extract location + country
+    const { location, country } = req.body.ListingsArr;
+
+    // 📍 2. Convert to coordinates
+    const coordinates = await getCoordinates(location, country);
+    
     let newListing = new Listing(req.body.ListingsArr);
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
+    // 🗺️ 4. Save geometry
+    newListing.geometry = {
+        type: "Point",
+        coordinates: coordinates // [longitude, latitude]
+    };
+   
     await newListing.save();
     req.flash("success", "New Property added Sucessfully!");
     console.log(req.body.ListingsArr);
     res.redirect("/listings");
 }
+
+
+
+
+
+// module.exports.createListing = async (req, res) => {
+//     try {
+//         let url = req.file.path;
+//         let filename = req.file.filename;
+
+//         // 📍 1. Extract location + country
+//         const { location, country } = req.body.ListingsArr;
+
+//         // 📍 2. Convert to coordinates
+//         const coordinates = await getCoordinates(location, country);
+
+//         // 📦 3. Create listing
+//         let newListing = new Listing(req.body.ListingsArr);
+
+//         newListing.owner = req.user._id;
+//         newListing.image = { url, filename };
+
+//         // 🗺️ 4. Save geometry
+//         newListing.geometry = {
+//             type: "Point",
+//             coordinates: coordinates // [longitude, latitude]
+//         };
+
+//         // 💾 5. Save
+//         await newListing.save();
+
+//         req.flash("success", "New Property added Successfully!");
+//         res.redirect("/listings");
+
+//     } catch (err) {
+//         console.error(err);
+//         req.flash("error", "Invalid location or something went wrong");
+//         res.redirect("/listings");
+//     }
+// };
 
 //edit route................
 module.exports.editListing = async (req, res) => {
@@ -85,7 +154,7 @@ module.exports.updateListing = async (req, res) => {
     if (typeof req.file !== "undefined") {
         let url = req.file.path;
         let filename = req.file.filename;
-        console.log(editHoteldata);
+       
         editHoteldata.image = {url,filename};
         console.log(editHoteldata);
         await editHoteldata.save();

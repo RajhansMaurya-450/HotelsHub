@@ -20,6 +20,7 @@ const upload = multer({ storage })
 
 const validateListing = (req, res, next) => { //server silde validation using Joi..............
     let { error } = listingSchema.validate(req.body);
+    console.log(error);
     if (error) {
         let errMsg = error.details.map((el) => el.message).join(",");
         throw new ExpressError(400, errMsg);

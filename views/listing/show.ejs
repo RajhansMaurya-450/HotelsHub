@@ -1,5 +1,13 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
+<script>
+const coordinates = <%- JSON.stringify(singleData.geometry.coordinates) %>;
+const Hotel_Name = "<%= singleData.title %>";
+const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
+
+</script>
+
+
    <div class="row mt-3">
       <div class="col-8 offset-2">
          <b>
@@ -117,15 +125,16 @@
 
       const map = new maplibregl.Map({
          container: 'my-map',
-         style: 'https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=',
-         center: [77.2090, 28.6139],
+         style: 'https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=`${GEOAPIFY_API_KEY}`',
+         center: coordinates,
          zoom: 14
       });
 
       map.addControl(new maplibregl.NavigationControl());
 
       new maplibregl.Marker({color:"red"})
-         .setLngLat([77.2090, 28.6139])
+         .setLngLat(coordinates)
+         .setPopup(new maplibregl.Popup().setText(Hotel_Name))
          .addTo(map);
 
    </script>
