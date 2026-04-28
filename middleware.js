@@ -6,7 +6,7 @@ const { listingSchema,reviewSchema } = require("./schema.js");
 module.exports.isLoggedIn = (req,res,next) => {
     if(!req.isAuthenticated()) {
         req.session.redirectUrl = req.originalUrl;
-        req.flash("error","You must be logged in to add your property!");
+        req.flash("error","Unauthorize Access!");
         return res.redirect("/login");
     }
     next();

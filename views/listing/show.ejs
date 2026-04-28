@@ -3,7 +3,7 @@
 <script>
 const coordinates = <%- JSON.stringify(singleData.geometry.coordinates) %>;
 const Hotel_Name = "<%= singleData.title %>";
-const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
+const GEOAPIFY_API_KEY = "<%= process.env.GEOAPIFY_API_KEY %>";
 
 </script>
 
@@ -125,7 +125,7 @@ const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
 
       const map = new maplibregl.Map({
          container: 'my-map',
-         style: 'https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=`${GEOAPIFY_API_KEY}`',
+         style: `https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=${GEOAPIFY_API_KEY}`,
          center: coordinates,
          zoom: 14
       });
