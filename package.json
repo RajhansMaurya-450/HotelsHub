@@ -1,4 +1,7 @@
 {
+  "engine":{
+    "node":"22.21.0"
+  },
   "name": "hotelshub",
   "version": "1.0.0",
   "description": "",
@@ -13,6 +16,7 @@
     "axios": "1.14.0",
     "cloudinary": "^1.30.0",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "ejs": "^4.0.1",

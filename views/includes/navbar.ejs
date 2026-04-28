@@ -7,22 +7,22 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/listing/new">Add Hotels/Property</a>
-        <a class="nav-link" href="/listings">Show Hotels </a>
+
+        <a class="nav-link" href="/listings">Explore Hotels </a>
         <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
       </div>
 
       <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listing/new">Add Hotels/Property</a>
         <% if(!currUser) {%>
-          <a class="nav-link" href="/signup">SignUp</a>
-          <a class="nav-link" href="/login">Login </a>
+          <b><a class="nav-link" href="/signup">SignUp</a></b>
+          <b><a class="nav-link" href="/login">Login </a></b>
           <% } %>
-          <% if(currUser) {%>
-            <span class="nav-link">Welcome,<%= currUser.username %> </span>
-          <a class="nav-link" href="/logout">Logout </a>
-         <% } %>
-          <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
+            <% if(currUser) {%>
+              <span class="nav-link">Welcome,<%= currUser.username %> </span>
+             <b><a class="nav-link" href="/logout">Logout </a></b>
+              <% } %>
+                <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
       </div>
     </div>
   </div>

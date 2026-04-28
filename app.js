@@ -5,7 +5,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const PORT = 2020;
 const app = express();
-const MONGO_URL ='mongodb://127.0.0.1:27017/HotelsHub';
+const MONGO_URL = process.env.MONGODB_ATLAS;
+//const MONGO_URL ='mongodb://127.0.0.1:27017/HotelsHub';
 const Listing = require("./models/listing.js")
 const path = require("path");
 const ejsMate = require('ejs-mate'); //for the modularity of ejs repeated codes...............
@@ -16,8 +17,23 @@ const listingRouter = require("./routes/listings.js")
 const reviewRouter = require("./routes/review.js")
 const userrouter = require("./routes/user.js")
 const session = require('express-session');
+const MongoStore = require('connect-mongo').default;
+
+const store = MongoStore.create({ 
+    mongoUrl:MONGO_URL,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 *3600
+ });
+
+ store.on("error", (err) => {
+    console.log("Error in MONGO SESSION STORE",err);
+ });
+
 const sessionOptions = {  //session Object...............
-    secret: "musssession",
+    store:store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -26,6 +42,8 @@ const sessionOptions = {  //session Object...............
         httpOnly:true
     },
 };
+
+
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
@@ -40,6 +58,7 @@ const methodOverride = require("method-override");
 const Review = require("./models/review.js");
 const { listingSchema,reviewSchema } = require("./schema.js");
 const { maxHeaderSize } = require("http");
+const { error } = require("console");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate );
@@ -73,9 +92,10 @@ async function main() {
 
 }
 
-app.get("/",(req,res)=>{
-    res.send("Welcome to HotelsHub!");
-})
+// app.get("/",(req,res)=>{
+//     res.send("Welcome to HotelsHub!");
+// })
+
 app.use((req,res,next)=>{
     res.locals.successMsg = req.flash("success");
     res.locals.errorMsg = req.flash("error");
