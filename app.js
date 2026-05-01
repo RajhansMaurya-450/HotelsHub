@@ -92,9 +92,7 @@ async function main() {
 
 }
 
-// app.get("/",(req,res)=>{
-//     res.send("Welcome to HotelsHub!");
-// })
+
 
 app.use((req,res,next)=>{
     res.locals.successMsg = req.flash("success");
@@ -143,6 +141,11 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 
 //     res.send("hello");
 // })
+
+ app.get("/",(req,res)=>{
+//     res.send("Welcome to HotelsHub!");
+        res.render("homepage.ejs");
+ })
 
 //show route...........
 app.get("/listingData/:id",wrapAsync(ListingController.showlisting)); //mvc logic for show route..........

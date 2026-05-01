@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <body>
+    <!-- <body>
 
         <div class="row">
             <div class="col-8 mt-3 offset-2">
@@ -43,16 +43,16 @@
 
                         <div class="valid-feedback">Nice location</div>
                         <div class="invalid-feedback">Enter a valid location!</div>
-                    </div>
+                    </div> -->
 
-
-                    <!-- <div class="mb-3"><label class="form-label">image:</label>
+    <!-- comment -->
+    <!-- <div class="mb-3"><label class="form-label">image:</label>
                         <input type="text" class="form-control" value="<%= editHoteldata.image.url  %>" id="image"
                             name="ListingsArr[image][url]">
                         
-                    </div> -->
+                    </div> --> <!-- comment -->
 
-                    <div class="mb-3">
+    <!-- <div class="mb-3">
                         <label class="form-label">Current Image:</label>
                         <img src="<%= originalImageUrl %>">
                     </div>
@@ -67,4 +67,84 @@
             </div>
         </div>
 
+    </body> -->
+
+    <body>
+        <div class="row mt-5 mb-5">
+
+            <div class="col-lg-5 col-md-7 col-11 mx-auto">
+
+                <div class="card shadow border-0 p-4 rounded-3">
+
+                    <h4 class="text-center mb-4">Edit Hotel Details</h4>
+
+                    <form enctype="multipart/form-data" method="POST"
+                        action="/listings/<%= editHoteldata._id %>?_method=PUT" novalidate class="needs-validation">
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Hotel Name</label>
+                            <input type="text" class="form-control" id="title" name="ListingsArr[title]"
+                                value="<%= editHoteldata.title %>" required>
+                            <div class="invalid-feedback">Enter a valid title!</div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Description</label>
+                            <textarea class="form-control" id="description" name="ListingsArr[description]" rows="3"
+                                required><%= editHoteldata.description %></textarea>
+                            <div class="invalid-feedback">Enter a valid description!</div>
+                        </div>
+
+                        <!-- Price + Country -->
+                        <div class="row">
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label fw-medium">Price</label>
+                                <input type="text" class="form-control" id="price" name="ListingsArr[price]"
+                                    value="<%= editHoteldata.price %>" required>
+                                <div class="invalid-feedback">Enter a valid price!</div>
+                            </div>
+
+                            <div class="col-md-7 mb-3">
+                                <label class="form-label fw-medium">Country</label>
+                                <input type="text" class="form-control" id="country" name="ListingsArr[country]"
+                                    value="<%= editHoteldata.country %>" required>
+                                <div class="invalid-feedback">Enter a valid country!</div>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Location</label>
+                            <input type="text" class="form-control" id="location" name="ListingsArr[location]"
+                                value="<%= editHoteldata.location %>" required>
+                            <div class="invalid-feedback">Enter a valid location!</div>
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Current Image</label><br>
+                            <img src="<%= originalImageUrl %>" class="img-fluid rounded mb-2"
+                                style="max-height: 180px;">
+                        </div>
+
+                        <!-- Upload -->
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Upload New Image</label>
+                            <input type="file" class="form-control" id="image" name="ListingsArr[image]">
+                        </div>
+
+                        <!-- Button -->
+                        <button type="submit" class="btn btn-danger w-100 py-2 rounded-pill mt-2">
+                            Apply Changes
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
     </body>

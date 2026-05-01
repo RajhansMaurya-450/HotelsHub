@@ -1,0 +1,275 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+    <body>
+        <!-- ===== HERO SECTION ===== -->
+        <section id="hero" class="hero-section" aria-label="Hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content animate-fade-up">
+                <span class="hero-badge mb-3 d-inline-block">✈️ 220+ Countries &amp; Regions</span>
+                <h1 class="hero-title">Belong anywhere</h1>
+                <p class="hero-subtitle">Find and book unique places to stay<br class="d-none d-md-block" />
+                    around the world.</p>
+                <a href="/listings" class="btn btn-hero-cta mt-4">
+                    <i class="bi bi-compass me-2"></i>Explore Now
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar-wrapper animate-fade-up-delay" id="searchBar" role="search"
+                aria-label="Property search">
+                <div class="search-bar">
+
+                    <!-- Where -->
+                    <div class="search-field" id="whereField">
+                        <div class="search-icon">
+                            <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                        </div>
+                        <div class="search-text">
+                            <label for="destinationInput" class="search-label">Where</label>
+                            <input type="text" id="destinationInput" class="search-input"
+                                placeholder="Search destinations" autocomplete="off" />
+                        </div>
+                    </div>
+
+                    <div class="search-divider" aria-hidden="true"></div>
+
+                    <!-- Check In -->
+                    <div class="search-field" id="checkInField">
+                        <div class="search-icon">
+                            <i class="bi bi-calendar3" aria-hidden="true"></i>
+                        </div>
+                        <div class="search-text">
+                            <label for="checkInDate" class="search-label">Check in</label>
+                            <input type="date" id="checkInDate" class="search-input" />
+                        </div>
+                    </div>
+
+                    <div class="search-divider" aria-hidden="true"></div>
+
+                    <!-- Check Out -->
+                    <div class="search-field" id="checkOutField">
+                        <div class="search-icon">
+                            <i class="bi bi-calendar3" aria-hidden="true"></i>
+                        </div>
+                        <div class="search-text">
+                            <label for="checkOutDate" class="search-label">Check out</label>
+                            <input type="date" id="checkOutDate" class="search-input" />
+                        </div>
+                    </div>
+
+                    <div class="search-divider" aria-hidden="true"></div>
+
+                    <!-- Guests -->
+                    <div class="search-field" id="guestsField">
+                        <div class="search-icon">
+                            <i class="bi bi-person" aria-hidden="true"></i>
+                        </div>
+                        <div class="search-text">
+                            <label for="guestsInput" class="search-label">Guests</label>
+                            <input type="number" id="guestsInput" class="search-input" placeholder="Add guests" min="1"
+                                max="20" />
+                        </div>
+                    </div>
+
+                    <!-- Explore Button -->
+                    <button class="btn btn-explore" id="exploreBtn" type="submit" aria-label="Explore properties">
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                        <span>Explore</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STATS STRIP ===== -->
+        <section class="stats-strip py-4" aria-label="Statistics">
+            <div class="container">
+                <div class="row text-center g-3">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <span class="stat-number">5M+</span>
+                            <span class="stat-label">Listings</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <span class="stat-number">220+</span>
+                            <span class="stat-label">Countries</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <span class="stat-number">100M+</span>
+                            <span class="stat-label">Happy Guests</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <span class="stat-number">4.9★</span>
+                            <span class="stat-label">Avg. Rating</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== WHY HOTELSHUB SECTION ===== -->
+        <section id="why" class="why-section py-5" aria-label="Why HotelsHub">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-chip">Our Advantages</span>
+                    <h2 class="why-title mt-3" id="whyTitle">Why HotelsHub?</h2>
+                    <p class="section-subtitle">Everything you need for the perfect stay</p>
+                </div>
+
+                <div class="row g-4 justify-content-center">
+
+                    <!-- Card 1 -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="feature-card" id="featureCard1">
+                            <div class="feature-icon-wrap">
+                                <i class="bi bi-house-heart feature-icon" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="feature-title">Unique stays</h3>
+                            <p class="feature-desc">Stay in homes, cabins, castles, and more. Anything but ordinary.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="feature-card" id="featureCard2">
+                            <div class="feature-icon-wrap">
+                                <i class="bi bi-tag feature-icon" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="feature-title">Great prices</h3>
+                            <p class="feature-desc">Find stays that fit your budget without compromising on comfort.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="feature-card" id="featureCard3">
+                            <div class="feature-icon-wrap">
+                                <i class="bi bi-globe2 feature-icon" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="feature-title">Global access</h3>
+                            <p class="feature-desc">Explore millions of places in 220+ countries and regions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="feature-card" id="featureCard4">
+                            <div class="feature-icon-wrap">
+                                <i class="bi bi-shield-check feature-icon" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="feature-title">Trusted and safe</h3>
+                            <p class="feature-desc">24/7 customer support and verified reviews for peace of mind.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TESTIMONIALS ===== -->
+        <section id="testimonials" class="testimonials-section py-5" aria-label="Testimonials">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-chip">Guest Reviews</span>
+                    <h2 class="why-title mt-3">What our guests say</h2>
+                    <p class="section-subtitle">Real experiences from real travellers</p>
+                </div>
+
+                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                    <div class="carousel-inner">
+
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8 col-lg-6">
+                                    <div class="testimonial-card text-center">
+                                        <div class="stars mb-3">★★★★★</div>
+                                        <p class="testimonial-text">"HotelsHub made finding our dream villa in Bali so
+                                            easy. The booking process was seamless and the property was exactly as
+                                            described!"</p>
+                                        <div class="testimonial-author mt-4">
+                                            <div class="author-avatar"
+                                                style="background: linear-gradient(135deg,#667eea,#764ba2);">S</div>
+                                            <div>
+                                                <strong>Sarah Mitchell</strong>
+                                                <span class="d-block text-muted small">Travelled to Bali</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8 col-lg-6">
+                                    <div class="testimonial-card text-center">
+                                        <div class="stars mb-3">★★★★★</div>
+                                        <p class="testimonial-text">"Found an incredible chalet in the Swiss Alps for
+                                            half the price I expected. Will definitely be using HotelsHub for every trip
+                                            from now on."</p>
+                                        <div class="testimonial-author mt-4">
+                                            <div class="author-avatar"
+                                                style="background: linear-gradient(135deg,#f093fb,#f5576c);">J</div>
+                                            <div>
+                                                <strong>James Parker</strong>
+                                                <span class="d-block text-muted small">Travelled to Switzerland</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8 col-lg-6">
+                                    <div class="testimonial-card text-center">
+                                        <div class="stars mb-3">★★★★★</div>
+                                        <p class="testimonial-text">"The customer support team was fantastic when we had
+                                            a question about check-in. 24/7 help is a game changer for international
+                                            travel!"</p>
+                                        <div class="testimonial-author mt-4">
+                                            <div class="author-avatar"
+                                                style="background: linear-gradient(135deg,#43e97b,#38f9d7);">A</div>
+                                            <div>
+                                                <strong>Aisha Rahman</strong>
+                                                <span class="d-block text-muted small">Travelled to Paris</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-btn"><i class="bi bi-chevron-left"></i></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-btn"><i class="bi bi-chevron-right"></i></span>
+                    </button>
+
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Review 1"></button>
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"
+                            aria-label="Review 2"></button>
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"
+                            aria-label="Review 3"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+    </body>

@@ -1,28 +1,59 @@
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <rect width="34" height="34" rx="8" fill="#FF385C" fill-opacity="0.12" />
+        <path d="M17 6L8 13v14h6v-8h6v8h6V13L17 6z" stroke="#FF385C" stroke-width="2" stroke-linejoin="round"
+          fill="none" />
+        <circle cx="17" cy="11" r="2" fill="#FF385C" />
+      </svg>
+      <span class="brand-name">HotelsHub</span>
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarMenu">
+      <i class="bi bi-list fs-2 text-white"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-
+        <a class="nav-link" href="/">Home </a>
+        <a class="nav-link" href="/listing/new">Add Hotels/Property</a>
         <a class="nav-link" href="/listings">Explore Hotels </a>
-        <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
+        <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a>  -->
       </div>
 
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listing/new">Add Hotels/Property</a>
         <% if(!currUser) {%>
-          <b><a class="nav-link" href="/signup">SignUp</a></b>
-          <b><a class="nav-link" href="/login">Login </a></b>
+          <b><a class="btn-signup" href="/signup">SignUp</a></b> &nbsp;&nbsp;&nbsp;
+          <b><a class="btn-login" href="/login">Login </a></b>
           <% } %>
-            <% if(currUser) {%>
-              <span class="nav-link">Welcome,<%= currUser.username %> </span>
-             <b><a class="nav-link" href="/logout">Logout </a></b>
+
+            <!-- <% if(currUser) {%>
+              <span class="nav-link">Welcome,<%= currUser.username %></span>
+              <b><a class="btn-logout" href="/logout">Logout </a></b>
+              <% } %> -->
+            <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a>  -->
+            <% if(currUser) { %>
+              
+              <div class="nav-item">
+
+                <!-- Username (clickable) -->
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> &nbsp; Welcome,
+                  <%= currUser.username %>
+                </a>
+
+                <!-- Dropdown -->
+                <ul class="dropdown-menu dropdown-menu-end text-center">
+                  <li class="d-flex justify-content-center">
+                    <a class="btn-logout" href="/logout">Logout</a>
+                  </li>
+                </ul>
+
+              </div>
               <% } %>
-                <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
+
       </div>
     </div>
   </div>

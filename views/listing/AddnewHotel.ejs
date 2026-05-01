@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <body>
+    <!-- <body>
         
         <div class="row">
             
@@ -12,7 +12,7 @@
                         <label for="title" class="form-label">Hotel Name:</label>
                         <input type="text" class="form-control" placeholder="Enter your Hotel name" id="title"
                             name="ListingsArr[title]" required>
-                            <!-- "required" is used to make this field madatory and not to be left empty! -->
+                             //"required" is used to make this field madatory and not to be left empty! 
                              <div class="valid-feedback">Title looks good!</div>
                              <div class="invalid-feedback">Enter a valid title!</div>
                     </div>
@@ -64,4 +64,74 @@
             </div>
         </div>
 
+    </body> -->
+
+    <body>
+        <div class="row mt-5 mb-5">
+
+            <div class="col-lg-5 col-md-7 col-11 mx-auto">
+
+                <div class="card shadow border-0 p-3 rounded-3">
+                   
+                       <h2 class="d-flex justify-content-center mb-3"><i class="fa-solid fa-hotel"></i></i></h2> 
+                    
+                    <h4 class="text-center mb-3">Add Hotel / Property</h4>
+
+                    <form enctype="multipart/form-data" method="POST" action="/listings?_method=PUT" novalidate
+                        class="needs-validation">
+
+                        <!-- Title -->
+                        <div class="mb-2">
+                            <label for="title" class="form-label small mb-1">Hotel Name</label>
+                            <input type="text" class="form-control" id="title" name="ListingsArr[title]"
+                                placeholder="Hotel name" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-2">
+                            <label for="description" class="form-label small mb-1">Description</label>
+                            <textarea class="form-control" id="description" name="ListingsArr[description]" rows="2"
+                                placeholder="Hotel details" required></textarea>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mb-2">
+                            <label for="location" class="form-label small mb-1">Location</label>
+                            <input type="text" class="form-control" id="location" name="ListingsArr[location]"
+                                placeholder="City / Area" required>
+                        </div>
+
+                        <!-- Price + Country -->
+                        <div class="row">
+                            <div class="col-md-5 mb-2">
+                                <label for="price" class="form-label small mb-1">Price</label>
+                                <input type="text" class="form-control" id="price" name="ListingsArr[price]"
+                                    placeholder="₹ Price" required>
+                            </div>
+
+                            <div class="col-md-7 mb-2">
+                                <label for="country" class="form-label small mb-1">Country</label>
+                                <input type="text" class="form-control" id="country" name="ListingsArr[country]"
+                                    placeholder="Country" required>
+                            </div>
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label small mb-1">Image</label>
+                            <input type="file" class="form-control" id="image" name="ListingsArr[image]" required>
+                        </div>
+
+                        <!-- Button -->
+                        <button class="btn btn-danger w-100 py-1 rounded-pill">
+                            Add Property
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
     </body>

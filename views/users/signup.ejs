@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <div class="row mt-3">
+    <!-- <div class="row mt-3">
         <h1 class="text-center">SignUp on Hotels Hub</h1>
         <div class="col-6 offset-3">
             <form method="POST" action="/signup" class="needs-validation" novalidate>
@@ -28,3 +28,52 @@
                     class="btn btn-success mt-3 align-center w-100">SignUp</button><br><br><br><br><br><br><br><br><br>
             </form>
         </div>
+    </div> -->
+
+    <div class="row mt-5 mb-5">
+
+        <div class="col-lg-4 col-md-6 col-10 mx-auto">
+
+            <div class="card shadow-lg border-0 p-4 rounded-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <i class="bi bi-person-plus fs-1"></i>
+                </div>
+                <h2 class="text-center mb-4"></i>SignUp on Hotels Hub</h2>
+
+                <form method="POST" action="/signup" class="needs-validation" novalidate>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-semibold">Username</label>
+                        <input type="text" class="form-control form-control-lg" id="username" name="username"
+                            placeholder="Enter your username" required>
+                        <div class="valid-feedback">Looks Good</div>
+                        <div class="invalid-feedback">Enter a valid Username!</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-semibold">Email</label>
+                        <input type="text" class="form-control form-control-lg" id="email" name="email"
+                            placeholder="Enter your email" required>
+                        <div class="valid-feedback">Looks Good</div>
+                        <div class="invalid-feedback">Enter a valid Email!</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-semibold">Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password"
+                            placeholder="Enter your password" required>
+                        <div class="valid-feedback">Looks Good</div>
+                        <div class="invalid-feedback">Password cannot be empty!</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger w-100 py-2 mt-3 rounded-pill">
+                        SignUp
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
