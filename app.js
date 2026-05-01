@@ -144,7 +144,7 @@ const validateListing = (req,res,next) => { //server silde validation using Joi.
 
  app.get("/",(req,res)=>{
 //     res.send("Welcome to HotelsHub!");
-        res.render("homepage.ejs");
+        res.render("homepage");
  })
 
 //show route...........
