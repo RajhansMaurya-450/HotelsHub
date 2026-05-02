@@ -17,10 +17,10 @@ module.exports.SignUpUser = async (req, res) => {
         req.login(registeredUser, (err) => {//login route........
             if (err) {
                 req.flash("error", "An error occured during login, PLease logging in manually..!");
-                res.redirect("/listings");
+                res.redirect("/");
             }
             req.flash("success", `Welcome to the HotelsHub ${registeredUser.username}!`);
-            res.redirect("/listings");
+            res.redirect("/");
         })
 
     }
@@ -40,7 +40,7 @@ module.exports.renderLoginForm = (req, res) => {
 //login route..............
 module.exports.loginUser = async (req, res) => {
     req.flash("success", `Welcome Back to Hotels Hub ${req.user.username}`);
-    let redirectUrl = res.locals.redirectUrl || "/listings";
+    let redirectUrl = res.locals.redirectUrl || "/";
     res.redirect(redirectUrl);
 }
 
