@@ -12,7 +12,7 @@ const GEOAPIFY_API_KEY = "<%= process.env.GEOAPIFY_API_KEY %>";
    
     <div class="col-lg-10 col-12">
       <h2 class="fw-bold mb-4"><%= singleData.title %></h2>
-      
+
       <img src="<%= singleData.image.url %>" class="img-fluid w-100 rounded-4" style="max-height:420px; object-fit:cover;" alt="hotel image">
     </div>
   </div>
@@ -59,9 +59,11 @@ const GEOAPIFY_API_KEY = "<%= process.env.GEOAPIFY_API_KEY %>";
               <h6 class="fw-bold mb-1">@<%= review.author.username %></h6>
               <p class="starability-result mb-2" data-rating="<%= review.rating %>"><%= review.rating %>/5</p>
               <p class="card-text text-muted mb-3"><%= review.Comment %></p>
+               <% if (currUser && review.author && review.author._id.toString() === currUser._id.toString()) { %>
               <form method="post" action="/listingData/<%= singleData._id %>/reviews/<%= review._id %>?_method=DELETE">
                 <button class="btn btn-danger btn-sm">Delete</button>
               </form>
+              <% } %>
             </div>
           </div>
         <% } %>
